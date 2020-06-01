@@ -10,6 +10,7 @@ const port = 8000;
 app.use(express.json({extended:false}));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use('/api/userModel', require('./api/User'));
+app.use('/api/noteModel', require('./api/Note'));
 require('./app/routes')(app, {});
 app.listen(port, () => {  
     console.log('We are live on ' + port);
