@@ -1,7 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const Note = require('../config/Note');
-const route = express.Router();
+const route = express.Router({ mergeParams : true });
 var ObjectID = require('mongodb').ObjectID;
 
 route.post('/', async (req,res)=>{
@@ -15,20 +15,20 @@ route.post('/', async (req,res)=>{
     res.json(noteModel);
 })
 
-route.get('/', function(req, res) {
+route.get('/', function(req, res, next) {
     const id = req.params.id;
-    const details = { '_id': new ObjectID(id) }; 
-    console.log('id = ', id);
-    console.log('details = ',new ObjectID(id));
-    Note.findById(details._id, (err, item) => {
-        if (err) {        
-            res.send({'error':'An error has occurred'});      
-        } else {        
-            res.send(item);  
-            console.log('item sent')    
-            console.log(item)    
-        }    
-    });
+    Note.findById(id)
+        .then(item => {
+            if (!item) {        
+                res.send({'error':'An error has occurred'});      
+            } else {        
+                res.send(item);  
+                console.log('item sent')    
+                console.log(item)    
+            }    
+        })
+        .catch(err=>next(err))
+            
 
     // res.send('This is where I can retrieve a /note');
 });
