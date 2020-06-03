@@ -5,6 +5,11 @@
 - Mongoose
 - MongoDB
 
+# Getting Up & Running
+1. npm i (install the dependencies)
+2. create pass.js exporting the database server string/url provided by MongoDB 
+3. npm run dev (run the nodemon script to get server up and running)
+
 # How to Use API: 
 Make a Note: [POST Request]
 http://localhost:8000/api/noteModel
